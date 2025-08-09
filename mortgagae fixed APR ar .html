@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة التمويل العقاري التفاعلية - زياد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f7fafc;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <div class="flex justify-end mb-4">
+            <p class="text-sm text-gray-500">صنعت بواسطة زيـاد @z_alsweed</p>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">حاسبة التمويل العقاري التفاعلية الخاصة بـ زياد</h1>
+            <p class="mt-2 text-lg text-gray-600">غيّر الأرقام لترى كيف تتحدث الجداول تلقائياً. النتائج الرئيسية تستخدم طريقة "الفلات ريت".</p>
+        </div>
+
+        <!-- Inputs Section -->
+        <div class="input-card mb-10">
+            <h2 class="text-2xl font-bold text-gray-700 mb-6 border-b pb-3">المدخلات الأساسية</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+                <div>
+                    <label for="monthlySalary" class="block text-sm font-medium text-gray-700">الراتب الشهري (ريال)</label>
+                    <input type="number" id="monthlySalary" value="20000" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                <div>
+                    <label for="propertyPrice" class="block text-sm font-medium text-gray-700">سعر العقار (ريال)</label>
+                    <input type="number" id="propertyPrice" value="1128000" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                <div>
+                    <label for="cashDownPayment" class="block text-sm font-medium text-gray-700">الدفعة المقدمة النقدية (ريال)</label>
+                    <input type="number" id="cashDownPayment" value="0" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                <div>
+                    <label for="personalLoanAmount" class="block text-sm font-medium text-gray-700">التمويل الشخصي (ريال)</label>
+                    <input type="number" id="personalLoanAmount" value="300000" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                 <div>
+                    <label for="mortgageRate" class="block text-sm font-medium text-gray-700">نسبة التمويل العقاري (%)</label>
+                    <input type="number" id="mortgageRate" value="2.99" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                <div>
+                    <label for="personalLoanRate" class="block text-sm font-medium text-gray-700">نسبة التمويل الشخصي (%)</label>
+                    <input type="number" id="personalLoanRate" value="2.09" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+                 <div>
+                    <label for="gracePeriod" class="block text-sm font-medium text-gray-700">فترة سماح التمويل العقاري (أشهر)</label>
+                    <input type="number" id="gracePeriod" value="0" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg p-2">
+                </div>
+            </div>
+            <div class="mt-6 flex items-center gap-2">
+                <button id="saveLocal" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">حفظ الإعدادات</button>
+                <button id="resetBtn" class="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300">إعادة تعيين</button>
+            </div>
+        </div>
+
+        <!-- Outputs Section -->
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">النتائج والتحليل (طريقة الفلات ريت)</h2>
+        <div class="space-y-8">
+            <div class="overflow-x-auto bg-white rounded-lg shadow">
+                <table class="min-w-full text-sm divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">السيناريو</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">نوع التمويل</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">المبلغ</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">المدة (سنوات)</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">القسط</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">نسبة الراتب</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">هامش الربح</th>
+                            <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">إجمالي المدفوعات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="results-tbody">
+                        <!-- Scenario 1 -->
+                        <tr class="bg-blue-50">
+                            <td rowspan="2" class="px-4 py-4 font-bold text-blue-800 align-top">الخطة المدمجة (20 سنة)</td>
+                            <td class="px-4 py-4 text-gray-700">شخصي</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-pl-amount"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium">5</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-pl-installment"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-pl-percentage"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-pl-profit"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-pl-total"></td>
+                        </tr>
+                        <tr class="bg-blue-50">
+                            <td class="px-4 py-4 text-gray-700">عقاري</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-ml-amount"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium">20</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-ml-installment"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-ml-percentage"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-ml-profit"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s1-ml-total"></td>
+                        </tr>
+                        <tr class="bg-blue-100 font-bold">
+                            <td></td>
+                            <td class="px-4 py-4 text-blue-900">المجموع</td>
+                            <td class="px-4 py-4 text-blue-900" id="s1-total-amount"></td>
+                            <td class="px-4 py-4 text-blue-900">-</td>
+                            <td class="px-4 py-4 text-blue-900" id="s1-total-installment"></td>
+                            <td class="px-4 py-4 text-blue-900" id="s1-total-percentage"></td>
+                            <td class="px-4 py-4 text-blue-900" id="s1-total-profit"></td>
+                            <td class="px-4 py-4 text-blue-900" id="s1-total-cost"></td>
+                        </tr>
+                        <!-- Scenario 2 -->
+                        <tr class="bg-green-50">
+                            <td rowspan="2" class="px-4 py-4 font-bold text-green-800 align-top">الخطة المثلى (15 سنة)</td>
+                            <td class="px-4 py-4 text-gray-700">شخصي</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-pl-amount"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium">5</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-pl-installment"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-pl-percentage"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-pl-profit"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-pl-total"></td>
+                        </tr>
+                        <tr class="bg-green-50">
+                            <td class="px-4 py-4 text-gray-700">عقاري</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-ml-amount"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium">15</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-ml-installment"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-ml-percentage"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-ml-profit"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s2-ml-total"></td>
+                        </tr>
+                        <tr class="bg-green-100 font-bold">
+                            <td></td>
+                            <td class="px-4 py-4 text-green-900">المجموع</td>
+                            <td class="px-4 py-4 text-green-900" id="s2-total-amount"></td>
+                            <td class="px-4 py-4 text-green-900">-</td>
+                            <td class="px-4 py-4 text-green-900" id="s2-total-installment"></td>
+                            <td class="px-4 py-4 text-green-900" id="s2-total-percentage"></td>
+                            <td class="px-4 py-4 text-green-900" id="s2-total-profit"></td>
+                            <td class="px-4 py-4 text-green-900" id="s2-total-cost"></td>
+                        </tr>
+                        <!-- Scenario 3 -->
+                        <tr class="bg-red-50">
+                            <td class="px-4 py-4 font-bold text-red-800">الخطة التقليدية</td>
+                            <td class="px-4 py-4 text-gray-700">عقاري</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s3-ml-amount"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium">20</td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s3-ml-installment"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s3-ml-percentage"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s3-ml-profit"></td>
+                            <td class="px-4 py-4 text-gray-800 font-medium" id="s3-ml-total"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="overflow-x-auto bg-white rounded-lg shadow">
+                <table class="min-w-full text-sm divide-y divide-gray-200">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="px-6 py-3 text-right font-bold uppercase tracking-wider">ملخص المقارنة</th>
+                            <th class="px-6 py-3 text-right font-bold uppercase tracking-wider">التكلفة الإجمالية</th>
+                            <th class="px-6 py-3 text-right font-bold uppercase tracking-wider">مبلغ التوفير</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 font-medium text-gray-800">الخطة التقليدية</td>
+                            <td class="px-6 py-4 font-medium text-gray-800" id="summary-s3-cost"></td>
+                            <td class="px-6 py-4 font-medium text-gray-500">0</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-800">الخطة المدمجة (20 سنة)</td>
+                            <td class="px-6 py-4 font-medium text-gray-800" id="summary-s1-cost"></td>
+                            <td class="px-6 py-4 font-bold text-yellow-600" id="summary-s1-saving"></td>
+                        </tr>
+                        <tr class="bg-green-100">
+                            <td class="px-6 py-4 font-bold text-green-900">الخطة المثلى (15 سنة)</td>
+                            <td class="px-6 py-4 font-bold text-green-900" id="summary-s2-cost"></td>
+                            <td class="px-6 py-4 font-black text-green-700 text-base" id="summary-s2-saving"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Amortization Schedule -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex flex-wrap items-center justify-between mb-4 gap-4">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800">التفصيل السنوي للتمويل العقاري (سيناريو APY)</h2>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <label for="targetApy" class="ml-2 text-sm font-medium text-gray-700">APY الثابت للتفصيل (%):</label>
+                            <input type="number" id="targetApy" value="6.00" step="0.01" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 w-28">
+                        </div>
+                        <div>
+                            <label for="amortization-scenario-select" class="ml-2 text-sm font-medium text-gray-700">السيناريو:</label>
+                            <select id="amortization-scenario-select" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+                                <option value="s2">الخطة المثلى (15 سنة)</option>
+                                <option value="s1">الخطة المدمجة (20 سنة)</option>
+                                <option value="s3">الخطة التقليدية</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">السنة</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">إجمالي المدفوعات</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">الربح المدفوع</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">الأصل المدفوع</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">الربح التراكمي</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">الأصل التراكمي</th>
+                                <th class="px-4 py-3 text-right font-bold text-gray-600 uppercase tracking-wider">الرصيد المتبقي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="amortization-tbody" class="bg-white divide-y divide-gray-200">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('input[type="number"]');
+        const amortizationSelect = document.getElementById('amortization-scenario-select');
+        const targetApyInput = document.getElementById('targetApy');
+
+        let amortizationData = {};
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'SAR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
+        }
+        
+        function calculateFlatRateLoan(principal, annualRate, years, graceMonths = 0) {
+            if (principal <= 0 || years * 12 <= graceMonths) return { monthlyPayment: 0, totalPayment: principal, totalProfit: 0 };
+            const totalInterest = principal * (annualRate / 100) * years;
+            const totalPayment = principal + totalInterest;
+            const remainingPayments = (years * 12) - graceMonths;
+            if (remainingPayments <= 0) return { monthlyPayment: 0, totalPayment: totalPayment, totalProfit: totalInterest };
+            const monthlyPayment = totalPayment / remainingPayments;
+            return { monthlyPayment, totalPayment, totalProfit: totalInterest };
+        }
+
+        function calculatePercentage(amount, total) {
+            if (total === 0 || amount === 0) return '0.0%';
+            return ((amount / total) * 100).toFixed(1) + '%';
+        }
+
+        function calculateAndDisplay() {
+            const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+            const propertyPrice = parseFloat(document.getElementById('propertyPrice').value) || 0;
+            const cashDownPayment = parseFloat(document.getElementById('cashDownPayment').value) || 0;
+            const personalLoanAmount = parseFloat(document.getElementById('personalLoanAmount').value) || 0;
+            const personalLoanRate = parseFloat(document.getElementById('personalLoanRate').value) || 0;
+            const mortgageRate = parseFloat(document.getElementById('mortgageRate').value) || 0;
+            const gracePeriod = parseInt(document.getElementById('gracePeriod').value) || 0;
+            
+            const totalDownPayment = cashDownPayment + personalLoanAmount;
+            const mortgageAmount = propertyPrice - totalDownPayment;
+            const traditionalMortgageAmount = propertyPrice - cashDownPayment;
+
+            const calculationFunction = calculateFlatRateLoan;
+            
+            const pl_s1 = calculationFunction(personalLoanAmount, personalLoanRate, 5, 0);
+            const pl_s2 = pl_s1;
+
+            const ml_s1 = calculationFunction(mortgageAmount, mortgageRate, 20, gracePeriod);
+            const ml_s2 = calculationFunction(mortgageAmount, mortgageRate, 15, gracePeriod);
+            const ml_s3 = calculationFunction(traditionalMortgageAmount, mortgageRate, 20, gracePeriod);
+
+            // Scenario 1
+            document.getElementById('s1-pl-amount').innerText = formatCurrency(personalLoanAmount);
+            document.getElementById('s1-pl-installment').innerText = formatCurrency(pl_s1.monthlyPayment);
+            document.getElementById('s1-pl-percentage').innerText = calculatePercentage(pl_s1.monthlyPayment, monthlySalary);
+            document.getElementById('s1-pl-profit').innerText = formatCurrency(pl_s1.totalProfit);
+            document.getElementById('s1-pl-total').innerText = formatCurrency(pl_s1.totalPayment);
+            document.getElementById('s1-ml-amount').innerText = formatCurrency(mortgageAmount);
+            document.getElementById('s1-ml-installment').innerText = formatCurrency(ml_s1.monthlyPayment);
+            document.getElementById('s1-ml-percentage').innerText = calculatePercentage(ml_s1.monthlyPayment, monthlySalary);
+            document.getElementById('s1-ml-profit').innerText = formatCurrency(ml_s1.totalProfit);
+            document.getElementById('s1-ml-total').innerText = formatCurrency(ml_s1.totalPayment);
+            document.getElementById('s1-total-amount').innerText = formatCurrency(propertyPrice);
+            const s1_total_installment = pl_s1.monthlyPayment + ml_s1.monthlyPayment;
+            document.getElementById('s1-total-installment').innerText = `~${formatCurrency(s1_total_installment)}`;
+            document.getElementById('s1-total-percentage').innerText = calculatePercentage(s1_total_installment, monthlySalary);
+            const s1_total_profit = pl_s1.totalProfit + ml_s1.totalProfit;
+            document.getElementById('s1-total-profit').innerText = formatCurrency(s1_total_profit);
+            const s1_total_cost = pl_s1.totalPayment + ml_s1.totalPayment + cashDownPayment;
+            document.getElementById('s1-total-cost').innerText = formatCurrency(s1_total_cost);
+            
+            // Scenario 2
+            document.getElementById('s2-pl-amount').innerText = formatCurrency(personalLoanAmount);
+            document.getElementById('s2-pl-installment').innerText = formatCurrency(pl_s2.monthlyPayment);
+            document.getElementById('s2-pl-percentage').innerText = calculatePercentage(pl_s2.monthlyPayment, monthlySalary);
+            document.getElementById('s2-pl-profit').innerText = formatCurrency(pl_s2.totalProfit);
+            document.getElementById('s2-pl-total').innerText = formatCurrency(pl_s2.totalPayment);
+            document.getElementById('s2-ml-amount').innerText = formatCurrency(mortgageAmount);
+            document.getElementById('s2-ml-installment').innerText = formatCurrency(ml_s2.monthlyPayment);
+            document.getElementById('s2-ml-percentage').innerText = calculatePercentage(ml_s2.monthlyPayment, monthlySalary);
+            document.getElementById('s2-ml-profit').innerText = formatCurrency(ml_s2.totalProfit);
+            document.getElementById('s2-ml-total').innerText = formatCurrency(ml_s2.totalPayment);
+            document.getElementById('s2-total-amount').innerText = formatCurrency(propertyPrice);
+            const s2_total_installment = pl_s2.monthlyPayment + ml_s2.monthlyPayment;
+            document.getElementById('s2-total-installment').innerText = `~${formatCurrency(s2_total_installment)}`;
+            document.getElementById('s2-total-percentage').innerText = calculatePercentage(s2_total_installment, monthlySalary);
+            const s2_total_profit = pl_s2.totalProfit + ml_s2.totalProfit;
+            document.getElementById('s2-total-profit').innerText = formatCurrency(s2_total_profit);
+            const s2_total_cost = pl_s2.totalPayment + ml_s2.totalPayment + cashDownPayment;
+            document.getElementById('s2-total-cost').innerText = formatCurrency(s2_total_cost);
+
+            // Scenario 3
+            document.getElementById('s3-ml-amount').innerText = formatCurrency(traditionalMortgageAmount);
+            document.getElementById('s3-ml-installment').innerText = formatCurrency(ml_s3.monthlyPayment);
+            document.getElementById('s3-ml-percentage').innerText = calculatePercentage(ml_s3.monthlyPayment, monthlySalary);
+            document.getElementById('s3-ml-profit').innerText = formatCurrency(ml_s3.totalProfit);
+            const s3_total_cost = ml_s3.totalPayment + cashDownPayment;
+            document.getElementById('s3-ml-total').innerText = formatCurrency(s3_total_cost);
+
+            // Summary
+            document.getElementById('summary-s3-cost').innerText = formatCurrency(s3_total_cost);
+            document.getElementById('summary-s1-cost').innerText = formatCurrency(s1_total_cost);
+            document.getElementById('summary-s2-cost').innerText = formatCurrency(s2_total_cost);
+            document.getElementById('summary-s1-saving').innerText = formatCurrency(s3_total_cost - s1_total_cost);
+            document.getElementById('summary-s2-saving').innerText = `💰 ${formatCurrency(s3_total_cost - s2_total_cost)}`;
+            
+            amortizationData = {
+                s1: { mortgage: ml_s1, mortgageAmount: mortgageAmount, mortgageTerm: 20 },
+                s2: { mortgage: ml_s2, mortgageAmount: mortgageAmount, mortgageTerm: 15 },
+                s3: { mortgage: ml_s3, mortgageAmount: traditionalMortgageAmount, mortgageTerm: 20 }
+            };
+
+            updateAmortizationView();
+        }
+
+        function generateAmortizationSchedule(data) {
+            const tbody = document.getElementById('amortization-tbody');
+            tbody.innerHTML = '';
+
+            const { mortgage, mortgageAmount, mortgageTerm } = data;
+            const targetApy = parseFloat(document.getElementById('targetApy').value) || 0;
+
+            let mortgageBalance = mortgageAmount;
+            let cumulativeProfit = 0;
+            let cumulativePrincipal = 0;
+            
+            for (let year = 1; year <= mortgageTerm; year++) {
+                const beginningBalance = mortgageBalance;
+                let yearlyTotalPayment = mortgage.monthlyPayment * 12;
+                
+                let yearlyProfit = mortgageAmount * (targetApy / 100); // Using original mortgage amount as per user request
+                
+                // Cap the profit if the total profit limit is reached
+                if (cumulativeProfit + yearlyProfit > mortgage.totalProfit) {
+                    yearlyProfit = mortgage.totalProfit - cumulativeProfit;
+                }
+                
+                let yearlyPrincipal = yearlyTotalPayment - yearlyProfit;
+                
+                // Ensure principal doesn't exceed remaining balance
+                if (yearlyPrincipal > beginningBalance) {
+                    yearlyPrincipal = beginningBalance;
+                }
+
+                if (year === mortgageTerm) {
+                    yearlyPrincipal = beginningBalance;
+                    yearlyProfit = yearlyTotalPayment - yearlyPrincipal;
+                }
+
+                mortgageBalance -= yearlyPrincipal;
+                cumulativeProfit += yearlyProfit;
+                cumulativePrincipal += yearlyPrincipal;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-4 py-4 font-medium text-gray-800">${year}</td>
+                    <td class="px-4 py-4 text-gray-800">${formatCurrency(yearlyTotalPayment)}</td>
+                    <td class="px-4 py-4 text-red-600">${formatCurrency(yearlyProfit)}</td>
+                    <td class="px-4 py-4 text-green-600">${formatCurrency(yearlyPrincipal)}</td>
+                    <td class="px-4 py-4 text-gray-500">${formatCurrency(cumulativeProfit)}</td>
+                    <td class="px-4 py-4 text-gray-500">${formatCurrency(cumulativePrincipal)}</td>
+                    <td class="px-4 py-4 font-bold text-gray-900">${formatCurrency(Math.max(0, mortgageBalance))}</td>
+                `;
+                tbody.appendChild(tr);
+
+                if (mortgageBalance <= 0) break;
+            }
+        }
+
+        function updateAmortizationView() {
+            const selectedScenario = amortizationSelect.value;
+            if (amortizationData[selectedScenario]) {
+                generateAmortizationSchedule(amortizationData[selectedScenario]);
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('input', calculateAndDisplay);
+        });
+        
+        amortizationSelect.addEventListener('change', updateAmortizationView);
+        targetApyInput.addEventListener('input', updateAmortizationView);
+
+        // Initial calculation on page load
+        document.addEventListener('DOMContentLoaded', calculateAndDisplay);
+    </script>
+</body>
+</html>
+
